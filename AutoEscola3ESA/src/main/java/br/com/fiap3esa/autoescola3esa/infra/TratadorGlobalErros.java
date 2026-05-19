@@ -1,5 +1,6 @@
 package br.com.fiap3esa.autoescola3esa.infra;
 
+import br.com.fiap3esa.autoescola3esa.domain.aluno.AlunoNotFoundException;
 import br.com.fiap3esa.autoescola3esa.domain.instrutor.InstrutorNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,11 @@ public class TratadorGlobalErros {
 
     @ExceptionHandler(InstrutorNotFoundException.class)
     public ResponseEntity<DadosMessageNotFound> tratarInstrutorNotFound(InstrutorNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new DadosMessageNotFound(e.getMessage()));
+    }
+
+    @ExceptionHandler(AlunoNotFoundException.class)
+    public ResponseEntity<DadosMessageNotFound> tratarAlunoNotFound(AlunoNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new DadosMessageNotFound(e.getMessage()));
     }
 
